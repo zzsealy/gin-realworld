@@ -5,7 +5,11 @@ import (
 	"gin_learn/common"
 	"gin_learn/users"
 
+	docs "gin_learn/docs"
+
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/gorm"
 )
 
@@ -25,7 +29,11 @@ func main() {
 	common.CloseDB()
 
 	r := gin.Default()
-	// v1 = r.Group("/api")
-
+	v1 := r.Group("/api")
+	
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	users.UserRegister(v1.Group("/users"))
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	
 	r.Run()
 }

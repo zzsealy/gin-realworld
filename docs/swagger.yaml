@@ -1,0 +1,58 @@
+definitions:
+  users.FailResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: 请求失败
+        type: string
+    type: object
+  users.SuccessResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      message:
+        example: 请求成功
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/users/register:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      parameters:
+      - description: 用户名，必须唯一
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: 用户密码
+        in: query
+        name: password
+        required: true
+        type: string
+      - description: 用户邮箱
+        in: query
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功时返回的数据结构
+          schema:
+            $ref: '#/definitions/users.SuccessResponse'
+        "400":
+          description: 请求参数错误
+          schema:
+            $ref: '#/definitions/users.FailResponse'
+      summary: 用户注册
+      tags:
+      - example
+swagger: "2.0"
